@@ -1,0 +1,51 @@
+spring:
+  application:
+    admin:
+      enabled: true
+    name: schedule-service
+  profiles:
+    active: test
+  redis:
+    host: 172.10.10.236
+    port: 6379
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+    mapper:
+      default_view_inclusion: true
+    default-property-inclusion: 'non_null'
+
+ssm:
+  mode: dev
+  path: /exrates/core-service/test/mysql.token
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://172.50.50.245:8091/eureka}
+    should-unregister-on-shutdown: true
+    registry-fetch-interval-seconds: 5
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    lease-renewal-interval-in-seconds: 10
+    metadata-map:
+      startup: ${random.int}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+rabbit:
+  username: angulardemoaccess
+  password: angulardemoaccess
+  host: 172.31.14.1
+  port: 5672
+  exchange: EXCHANGE_TEST
+  topic: user_logs_queue_TEST

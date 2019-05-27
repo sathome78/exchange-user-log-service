@@ -1,0 +1,50 @@
+spring:
+  application:
+    admin:
+      enabled: true
+    name: schedule-service
+  profiles:
+    active: prod
+  redis:
+    host: 172.10.10.236
+    port: 6379
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+    mapper:
+      default_view_inclusion: true
+    default-property-inclusion: 'non_null'
+
+ssm:
+  mode: dev
+  path: /exrates/core-service/prod/???
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8080/eureka}
+    should-unregister-on-shutdown: true
+    registry-fetch-interval-seconds: 5
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    lease-renewal-interval-in-seconds: 10
+    metadata-map:
+      startup: ${random.int}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+rabbit:
+  username: angulardemoaccess
+  password: angulardemoaccess
+  host: 172.31.14.1
+  port: 5672
+  exchange: EXCHANGE_PROD
+  topic: USER_LOGS_QUEUE_PROD
